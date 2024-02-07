@@ -1,0 +1,190 @@
+% A4, 二段組，フォントサイズ 9bp, 段間 2.36char
+\documentclass[fontsize=9bp,twocolumn,column_gap=2.36zw,a4paper,report]{jlreq} 
+\usepackage[top=1.20in,bottom=0.95in,left=0.59in,right=0.59in,headheight=0.28in,headsep=0.42in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{color}
+\usepackage{textcomp}
+\usepackage{tipa}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsxtra}
+\usepackage{wasysym}
+\usepackage{isomath}
+\usepackage{mathtools}
+\usepackage{txfonts}
+\usepackage{upgreek}
+\usepackage{enumerate}
+\usepackage{tensor}
+\usepackage{pifont}
+\usepackage{ulem}
+\usepackage{xfrac}
+\usepackage{arydshln}
+\definecolor{red}{rgb}{1,0,0}
+
+\usepackage{luatexja-fontspec}
+% 欧文文字のフォントは「Times New Roman」指定
+\setmainfont[Ligatures={Rare,TeX}]{Times-New-Roman}
+\setsansfont{Arial}
+% 和文文字のフォントは「MS 明朝」指定
+\setmainjfont[
+    YokoFeatures       = {JFM=jlreq},
+    TateFeatures       = {JFM=jlreqv},
+    BoldFont           = MS-Mincho,
+    BoldFeatures       = {FakeBold=2},
+    ItalicFont         = MS-Mincho,
+    ItalicFeatures     = {FakeSlant=0.33},
+    BoldItalicFont     = MS-Mincho,
+    BoldItalicFeatures = {FakeBold=2, FakeSlant=0.33}
+]{MS-Mincho}
+\setsansjfont[
+    YokoFeatures       = {JFM=jlreq},
+    TateFeatures       = {JFM=jlreqv},
+    BoldFont           = MS-Gothic,
+    BoldFeatures       = {FakeBold=2},
+    ItalicFont         = MS-Gothic,
+    ItalicFeatures     = {FakeSlant=0.33},
+    BoldItalicFont     = MS-Gothic,
+    BoldItalicFeatures = {FakeBold=2, FakeSlant=0.33}
+]{MS-Gothic}
+\usepackage{setspace}
+\usepackage{caption}
+% キャプションのフォントは明朝体
+\captionsetup[figure]{font={normalsize,md}}
+\usepackage{unicode-math}
+\setmathfont{Cambria-Math}
+
+% ヘッダ 8bp
+\newcommand{\header}[1]{\fontsize{8bp}{10bp}\selectfont#1}
+% タイトル 16bp 中央揃え
+\renewcommand{\title}[1]{\fontsize{16bp}{22bp}\selectfont\centering#1}
+% サブタイトルタイトル 14bp 中央揃え
+\newcommand{\subtitle}[1]{\fontsize{14bp}{18bp}\selectfont\centering －#1－}
+% 筆者 12bp 中央揃え (研究室 名前)を入力
+\renewcommand{\author}[2]{\fontsize{12bp}{18bp}\selectfont\centering\vspace{0.3\baselineskip}#1\vspace{0.5\baselineskip}\hspace{1.5em}#2}
+% 章 行間はWordデフォルト 改ページしない 12bp 太字
+\ModifyHeading{chapter}{
+lines=1.15,
+allowbreak_if_evenpage=false,
+pagebreak=nariyuki,
+font=\fontsize{12bp}{16bp}\selectfont\bfseries,
+label_format={\thechapter.},
+}
+% 節 行間はWordデフォルト 改ページしない 10.5bp 太字
+\ModifyHeading{section}{
+lines=1.15,
+allowbreak_if_evenpage=false,
+pagebreak=nariyuki,
+font=\fontsize{10.5bp}{16bp}\selectfont\bfseries,
+label_format={\thesection.},
+}
+
+% ヘッダ設定
+\usepackage{titleps}
+\newpagestyle{header}{
+  \sethead
+  {\parbox{0.9\textwidth}{\header{
+   \ \ 豊田工業高等専門学校　情報工学科\\
+   \ \ Department of Information and Computer Engineering,\\
+   \ \ National Institute of Technology, Toyota College
+   }}}
+  {}
+  {\parbox{\textwidth}{\header{
+   卒業論文\\
+   Graduation Thesis\\
+   February 22, \the\year % 日にちは都度変更する必要有り
+   }}}
+   \setfoot
+   {}
+   {\thepage}
+   {}
+}
+
+% 参考文献の見出しを「文献」に変更
+\renewcommand{\refname}{%
+{\fontsize{10.5bp}{16bp}\selectfont\bfseries\centering{文\ \ \ \ \ \ 献}\par}
+}
+% ヘッダとフッタの bibliography を削除
+\renewcommand{\markboth}[2]{}
+
+% 1 ページ目以外はフッタのページ数のみ
+\pagestyle{plain}
+
+\begin{document}
+% 1 ページ目のみヘッダを挿入
+\thispagestyle{header}
+% タイトル(サブタイトル)とあらまし，キーワードは二段組にしない
+\twocolumn[
+{\title 情報工学科論文\LaTeX テンプレート (タイトル)\par}
+{\subtitle{サブタイトル}\par}
+{\author {〇〇研究室} {豊田 高専}\par}
+{\textbf{あらまし}\quad これは豊田高専情報工学科の卒業論文用\LaTeX テンプレートです．提供されるdocxファイルとほぼ同様の見た目になるようにフォントや文字間隔や余白などを調整しました．Lua\LaTeX 処理系の使用を想定しています．\par}
+{\textbf{キーワード}\quad \LaTeX, Word，豊田高専，卒業論文，テンプレート
+\newline}]
+
+% 和文文字間隔の設定
+\ltjsetkanjiskip 0.165em plus 0.165em minus 0.165em
+% 欧文和文文字間隔の設定
+\ltjsetxkanjiskip 0.33em plus 0.33em minus 0.33em
+% 欧文欧文文字感覚の設定
+\addfontfeature{LetterSpace=5}
+
+% 本文 (基本的にはタイトルとこれ以降の部分の編集をする)
+\chapter{はじめに}
+\section{背景}
+
+豊田高専情報工学科の卒業論文は学校から提供されたWordテンプレートを使って執筆することを前提としています．
+そのためフォントや文字間隔，余白などについて制約があり，Word以外のツールを用いて執筆することは困難でした．
+そこで\LaTeX でも執筆できるようにテンプレートを作成しました．
+
+\section{問題点}
+
+フォントはMS明朝が指定されていますが，これは古いだけでなくWindowsに搭載されているフォントでオープンソースではありません．
+また，文字間隔や余白はWord依存です．
+このような理由からLinux環境で卒論を執筆することが容易ではありません．
+\newline
+
+\chapter{使用方法}
+
+まずLua\LaTeX をインストールします．
+現在はTeX Liveをインストールすることが多いようです．
+また，「MS明朝」と「Times New Roman」をシステムのフォントとして配置します．
+その後，このテンプレートをダウンロードしてコンパイルします．
+\newline
+
+\chapter{コントリビュート}
+
+間違いや改善点があればコントリビュートしていただけると助かります．
+IssueやPull Request歓迎です．
+\newline
+
+\chapter{免責事項}
+
+このテンプレートを使用して生じたいかなる損害，不利益等について作者は一切の責任を負いません．
+自己責任でお願いします．
+\newline
+
+\chapter{おわりに}
+
+\LaTeX の記述で参考にしたページを列挙しておきます．
+
+\begin{itemize}
+	\item \url{https://tug.org/docs/latex/jlreq/jlreq-ja.html}
+	\item \url{https://github.com/abenori/jlreq}
+	\item \url{https://cns-guide.sfc.keio.ac.jp/2001/11/5/1.html}
+	\item \url{https://qiita.com/Daiji256/items/29adc574b15345d8afa2}
+\end{itemize}
+
+\begin{thebibliography}{99}
+\begin{spacing}{0}
+	\bibitem{ref1}{著者名，``標題''，雑誌名，巻，号，pp.を付けて始め－終りのページ，月(英語)年.}
+	\bibitem{ref2}{著者名，``標題''，雑誌名，巻，号，pp.を付けて始め－終りのページ，月(英語)年.}
+\end{spacing}
+\end{thebibliography}
+
+\end{document}
