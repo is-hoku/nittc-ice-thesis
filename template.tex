@@ -52,6 +52,8 @@
     BoldItalicFont     = MS-Gothic,
     BoldItalicFeatures = {FakeBold=2, FakeSlant=0.33}
 ]{MS-Gothic}
+% URL のフォントは等幅フォントにしない
+\urlstyle{same}
 \usepackage{setspace}
 \usepackage{caption}
 % キャプションのフォントはミディアム
@@ -133,6 +135,7 @@ label_format={\thesection.},
 \pagestyle{plain}
 
 % ソースコードの記述設定
+\usepackage{sourcecodepro}
 \usepackage{listings,xcolor}
 \lstset{
 	basicstyle = {\ttfamily},
@@ -159,6 +162,9 @@ label_format={\thesection.},
 \renewcommand{\thelstlisting}{ソースコード\arabic{lstlisting}}
 }
 
+% 参考文献の参照時の記号を上付きにする
+\usepackage[super]{cite}
+\renewcommand\citeform[1]{[#1]}
 
 \begin{document}
 % 1 ページ目のみヘッダを挿入
