@@ -22,7 +22,8 @@
 \usepackage{enumerate}
 \usepackage{tensor}
 \usepackage{pifont}
-\usepackage{ulem}
+% イタリック体がアンダーラインにならないようにする
+\usepackage[normalem]{ulem}
 \usepackage{xfrac}
 \usepackage{arydshln}
 \definecolor{red}{rgb}{1,0,0}
@@ -102,6 +103,22 @@ pagebreak=nariyuki,
 font=\fontsize{10.5bp}{16bp}\selectfont\bfseries,
 label_format={\thesection.},
 }
+% 小節 行間はWordデフォルト 改ページしない 太字
+\ModifyHeading{subsection}{
+lines=1.15,
+allowbreak_if_evenpage=false,
+pagebreak=nariyuki,
+font=\selectfont\bfseries,
+label_format={\thesubsection.},
+}
+% 小小節 行間はWordデフォルト 改ページしない 太字
+\ModifyHeading{subsubsection}{
+lines=1.15,
+allowbreak_if_evenpage=false,
+pagebreak=nariyuki,
+font=\selectfont\bfseries,
+label_format={\thesubsubsection.},
+}
 
 % ヘッダ設定
 \usepackage{titleps}
@@ -130,6 +147,11 @@ label_format={\thesection.},
 }
 % ヘッダとフッタの bibliography を削除
 \renewcommand{\markboth}[2]{}
+
+% 謝辞
+\newcommand{\acknowledgement}{%
+	{\fontsize{10.5bp}{16bp}\selectfont\bfseries\centering{謝\ \ \ \ \ \ 辞}\par}
+}
 
 % 1 ページ目以外はフッタのページ数のみ
 \pagestyle{plain}
@@ -162,6 +184,10 @@ label_format={\thesection.},
 \renewcommand{\thelstlisting}{ソースコード\arabic{lstlisting}}
 }
 
+% 数式番号をページ全体での連番にする
+\counterwithout{equation}{chapter}
+\counterwithout{equation}{section}
+
 % 参考文献の参照時の記号を上付きにする
 \usepackage[super]{cite}
 \renewcommand\citeform[1]{[#1]}
@@ -187,32 +213,103 @@ label_format={\thesection.},
 
 % 本文 (基本的にはタイトルとこれ以降の部分の編集をする)
 \chapter{はじめに}
-\section{背景}
 
-豊田高専情報工学科の卒業論文は学校から提供されたWordテンプレートを使って執筆することを前提としています．
-そのためフォントや文字間隔，余白などについて制約があり，Word以外のツールを用いて執筆することは困難でした．
-そこで\LaTeX でも執筆できるようにテンプレートを作成しました．
+\section{\TeX とは}
 
-\section{問題点}
+\TeX はDonald Ervin Knuthが開発したオープンソースの組版システムです．
+組版とは文字や図版，写真などをレイアウトの指定に従って配置する作業のことです．
+\TeX と言った時，\TeX 処理系と\TeX 言語(マークアップ言語，プログラミング言語)の両方を指しています．
+読み方は「テフ」もしくは「テック」です．
 
-フォントはMS明朝が指定されていますが，これは古いだけでなくWindowsに搭載されているフォントでオープンソースではありません．
-また，文字間隔や余白はWord依存です．
-このような理由からLinux環境で卒論を執筆することが容易ではありません．
+\section{\LaTeX とは}
+\TeX の命令(プリミティブ)を組み合わせて作成したマクロを作成し，これを用いて文書を記述することが一般的です．
+\LaTeX は，このマクロ体系の一つです．
+読み方は「ラテフ」もしくは「ラテック」です．
+
+\section{Lua\LaTeX とは}
+
+スクリプト言語であるLuaが利用できる\LaTeX です．
+通常，\TeX はDVIファイルを出力し，ユーザがこれをPDFファイルなどに変換するのですが，Lua\LaTeX ではPDFファイルを出力してくれます．
+また，システムのOpenType/TrueTypeフォントが簡単に利用できたり，日本語の扱いが容易だったりという利点があります．
 \newline
 
-\chapter{使用方法}
+\chapter{環境構築}
 
 まずLua\LaTeX をインストールします．
-現在はTeX Liveをインストールすることが多いようです．
+Lua\LaTeX と必要なパッケージを個別にインストールしても良いですが，TeX Liveをインストールすると一括で様々なパッケージやツールを利用できるようになるので楽ちんです．
 また，「MS明朝」と「Times New Roman」をシステムのフォントとして配置します．
 その後，このテンプレートをダウンロードしてコンパイルします．
 \newline
 
-\chapter{コントリビュート}
+\chapter{記述方法}
 
-間違いや改善点があればコントリビュートしていただけると助かります．
-IssueやPull Request歓迎です．
-\newline
+\texttt{\textbackslash chapter}や\texttt{\textbackslash section}でチャプターやセクションを書きます．
+それぞれのチャプターやセクションに続けて本文を記述していきます．
+このテンプレートではjlreqというクラスを使用しているため，書き方に関してはjlreqのドキュメント\cite{jlreq}を参照してください．
+
+\section{ラベルと参照}
+
+図や表，セクションなどを参照する場合は，参照される対象に\texttt{\textbackslash label}でラベルを記述し，参照する側で\texttt{\textbackslash ref}を記述します．\par
+例えば\ref{fig:thesis}を参照する場合は，このように記述します．
+
+\section{参考文献と引用}
+
+文献の参照にBIB\TeX を使用します．
+まず，\texttt{template.bib}に参照したい文献のデータベースを作ります．
+このデータベースを参照できるようにするために，\texttt{pbibtex template}を実行します．
+本文内で引用するときは\texttt{\textbackslash cite\{HIRANO2023301603\}}のように記述します．
+最後に\TeX ファイルをコンパイルします．
+参考文献は参照した順に自動で「文献」の下に挿入されます．
+詳しい操作はこのサイト\cite{bibtex}を見てください．
+
+\section{図の例}
+
+このテンプレートでは，ページの区切りを明示的に記述しておらず，自動で改ページされるため，図表をページの特定の位置に挿入したい場合は記述位置を調整する必要があります．
+
+\begin{figure}[h]
+\centering{
+\includegraphics[width=0.8\linewidth]{thesis.png}
+\caption{卒業論文のイメージ}\label{fig:thesis}
+}
+\end{figure}
+
+\section{ソースコードの例}
+
+\begin{lstlisting}[caption=C言語の記述例,label=code:polyglot,language=c]
+#include <stdio.h>
+int main(int argc, char** argv)
+{
+#define B(x) x; printf("  B(" #x ")\n");
+#define A(x) printf("  A(" #x ")\n"); x;
+  B(printf("#include <stdio.h>\nint main(int argc, char** argv)\n{\n#define B(x) 
+    x; printf(\"  B(\" #x \")\\n\");\n#define A(x) printf(\"  A(\" #x \")\\n\"); x;\n"))
+  A(printf("}\n"))
+}
+\end{lstlisting}
+
+\section{表の例}
+
+\begin{table}[h]
+	\caption{\TeX と\LaTeX}\label{tbl:texandlatex}
+	\centering
+	\begin{tabularx}{\linewidth}{|Y||c|c|}
+		\hline
+		& \TeX & \LaTeX \\
+		\hline\hline
+		開発者 & Donald Ervin Knuth & Leslie Lamport \\
+		\hline
+		発表年 & 1978年 & 1985年 \\
+		\hline
+		概要 & 言語と処理系 & マクロ体系 \\
+		\hline
+	\end{tabularx}
+\end{table}
+
+\section{数式の例}
+
+\begin{equation}
+	x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}
+\end{equation}
 
 \chapter{免責事項}
 
@@ -222,20 +319,15 @@ IssueやPull Request歓迎です．
 
 \chapter{おわりに}
 
-\LaTeX の記述で参考にしたページを列挙しておきます．
+間違いや改善点があればコントリビュートしていただけると助かります．
+\newline
 
-\begin{itemize}
-	\item \url{https://tug.org/docs/latex/jlreq/jlreq-ja.html}
-	\item \url{https://github.com/abenori/jlreq}
-	\item \url{https://cns-guide.sfc.keio.ac.jp/2001/11/5/1.html}
-	\item \url{https://qiita.com/Daiji256/items/29adc574b15345d8afa2}
-\end{itemize}
+\acknowledgement
+本文書の執筆は，偉大な先達の知恵と努力によって成り立っています．
+Knuth先生に敬意と感謝を申し上げます．
+\newline
 
-\begin{thebibliography}{99}
-\begin{spacing}{0}
-	\bibitem{ref1}{著者名，``標題''，雑誌名，巻，号，pp.を付けて始め－終りのページ，月(英語)年.}
-	\bibitem{ref2}{著者名，``標題''，雑誌名，巻，号，pp.を付けて始め－終りのページ，月(英語)年.}
-\end{spacing}
-\end{thebibliography}
+\bibliography{template}
+\bibliographystyle{junsrt}
 
 \end{document}

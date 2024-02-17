@@ -1,0 +1,29 @@
+@article{HIRANO2023301603,
+title = {FIMAR: Fast incremental memory acquisition and restoration system for temporal-dimension forensic analysis},
+journal = {Forensic Science International: Digital Investigation},
+volume = {46},
+pages = {301603},
+year = {2023},
+issn = {2666-2817},
+doi = {https://doi.org/10.1016/j.fsidi.2023.301603},
+url = {https://www.sciencedirect.com/science/article/pii/S2666281723001154},
+author = {Manabu Hirano and Ryotaro Kobayashi},
+keywords = {Memory dump, Memory forensics, Thin hypervisor, Anti-forensics, Ransomware analysis},
+abstract = {Recent advances in anti-forensic techniques, including encryption, obfuscation, and kernel-structure manipulations, make conventional storage, network, and memory forensics difficult. For example, the code of packed malware is encrypted on storage, network packets, and system RAM to hide its existence; it appears briefly in plain text on the system RAM during its execution phase. Memory forensics, therefore, has been a vital component of today's digital forensics. Conventional memory acquisition techniques, however, capture only the current state of a system RAM; if the timing of the acquisition is late, the evidence could be lost forever. Since the state-of-the-art anti-forensic attacks leave only the slightest evidence for the shortest time, finer temporal acquisition and analysis are needed. This paper presented a Fast Incremental Memory Acquisition and Restoration (FIMAR) system that enables us to acquire multiple memory snapshots (i.e., memory dumps) over time and to construct a timeline of past activities on a computer. A thin hypervisor and its Second Level Address Translation (SLAT) were used to track memory page changes and to obtain atomic memory snapshots. The hash calculation of 4 KiB chunks was used to detect updated parts of the system RAM to reduce the transfer size. We implemented the incremental memory acquisition algorithms using a thin hypervisor called BitVisor. Finally, we tested the developed FIMAR system to analyze BlueSky ransomware with anti-forensic logic. The developed FIMAR system improved the atomicity of memory snapshots using TLB shootdown and considering per-core Extended Page Tables (EPTs) compared to previous hypervisor-based memory acquisition systems.}
+}
+
+@misc{bibtex,
+    title = {LaTeX 参考文献処理(BibTeX)},
+    url = {http://www.yamamo10.jp/yamamoto/comp/latex/bibtex/bibtex.html},
+    author = {Yamamoto's Laboratory},
+    year = {2021},
+    note = {2024年2月16日閲覧}
+}
+
+@misc{jlreq,
+    title = {jlreq},
+    url = {https://tug.org/docs/latex/jlreq/jlreq-ja.html},
+    author = {Noriyuki Abe},
+    year = {2023},
+    note = {2024年2月16日閲覧}
+}
